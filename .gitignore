@@ -1,0 +1,6 @@
+site/
+mkdocs.yml
+docs/*.md
+docs/media/
+docs/downloads/
+__pycache__/

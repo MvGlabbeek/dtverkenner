@@ -1,0 +1,54 @@
+site_name: Digital twins voor het energiesysteem en de gebouwde omgeving
+site_description: Inventarisatie van digital-twin-initiatieven in Nederland en Europa (publieksversie)
+site_author: Martijn van Glabbeek (Bizz4Mation)
+site_url: https://mvglabbeek.github.io/dtverkenner/
+repo_url: https://github.com/MvGlabbeek/dtverkenner
+repo_name: MvGlabbeek/dtverkenner
+edit_uri: ""
+
+theme:
+  name: material
+  language: nl
+  custom_dir: overrides
+  features:
+    - navigation.instant
+    - navigation.top
+    - navigation.footer
+    - search.highlight
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      toggle: {icon: material/brightness-7, name: Donkere modus}
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      toggle: {icon: material/brightness-4, name: Lichte modus}
+
+plugins:
+  - search:
+      lang: nl
+
+markdown_extensions:
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+extra_css:
+  - css/extra.css
+  - https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css
+extra_javascript:
+  - https://code.jquery.com/jquery-3.7.1.min.js
+  - https://cdn.datatables.net/2.1.8/js/dataTables.min.js
+  - js/register.js
+
+# Commentaar via giscus (GitHub Discussions). Vul de ID's in na installatie van giscus.app.
+extra:
+  giscus:
+    repo: MvGlabbeek/dtverkenner
+    repo_id: "VUL_IN"
+    category: "Reacties"
+    category_id: "VUL_IN"
