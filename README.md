@@ -4,8 +4,6 @@ Publieksversie van de inventarisatie *Verkenner Digital Twins* (Energy Innovatio
 
 Leesbare site: **https://mvglabbeek.github.io/dtverkenner/**
 
-Reageren kan onderaan elke pagina (via GitHub Discussions) of in [Discussions](https://github.com/MvGlabbeek/dtverkenner/discussions).
-
 ## Nieuwe versie publiceren
 
 1. Controleer de publieksversie (rapport en register). Beide bestandsnamen moeten `publiek` bevatten, bijvoorbeeld
@@ -27,5 +25,7 @@ Lokaal testen: `pip install -r requirements.txt`, pandoc installeren, dan `pytho
 ## Eenmalige instellingen
 
 1. *Settings → Pages → Build and deployment → Source:* **GitHub Actions**.
+Later, als reacties gewenst zijn:
+
 2. *Settings → General → Features:* **Discussions** aan; maak een categorie *Reacties* (type *Announcement* of *Open-ended discussion*).
 3. Installeer de giscus-app via [giscus.app](https://giscus.app), kies deze repository en de categorie *Reacties*, en zet de getoonde `repo_id` en `category_id` in `mkdocs.base.yml` onder `extra.giscus`. Zolang daar `VUL_IN` staat, wordt het reactieveld niet getoond.

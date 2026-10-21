@@ -73,7 +73,7 @@ def rapport(docx: Path) -> list[tuple[str, str]]:
         f"Publieksversie van de inventarisatie (bron: `{docx.name}`).\n\n"
         "[Download het rapport (Word)](downloads/" + docx.name + "){ .md-button }\n"
         "[Bekijk het register](register.md){ .md-button }\n\n"
-        "Reacties zijn welkom onderaan elke pagina.\n\n" + voorwerk,
+        voorwerk,
         encoding="utf-8")
     return pages
 

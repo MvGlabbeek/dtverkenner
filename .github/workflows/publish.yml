@@ -16,7 +16,24 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      klaar: ${{ steps.bron.outputs.klaar }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: bron
+        name: Controleer of er een publieksversie in bron/ staat
+        run: |
+          if ls bron/*publiek*.docx >/dev/null 2>&1 && ls bron/*publiek*.xlsx >/dev/null 2>&1; then
+            echo "klaar=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "klaar=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Nog geen publieksversie (docx en xlsx met 'publiek' in de naam) in bron/; site niet gebouwd."
+          fi
   build:
+    needs: check
+    if: needs.check.outputs.klaar == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
