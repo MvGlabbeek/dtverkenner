@@ -4,3 +4,4 @@ docs/*.md
 docs/media/
 docs/downloads/
 __pycache__/
+_site/

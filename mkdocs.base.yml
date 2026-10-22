@@ -1,7 +1,7 @@
 site_name: Digital twins voor het energiesysteem en de gebouwde omgeving
 site_description: Inventarisatie van digital-twin-initiatieven in Nederland en Europa (publieksversie)
 site_author: Martijn van Glabbeek (Bizz4Mation)
-site_url: https://mvglabbeek.github.io/dtverkenner/
+site_url: https://mvglabbeek.github.io/dtverkenner/mkdocs/
 repo_url: https://github.com/MvGlabbeek/dtverkenner
 repo_name: MvGlabbeek/dtverkenner
 edit_uri: ""

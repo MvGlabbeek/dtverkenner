@@ -3,7 +3,7 @@ name: Publiceer site
 on:
   push:
     branches: [main]
-    paths: ["bron/**", "scripts/**", "overrides/**", "docs/js/**", "docs/css/**", "mkdocs.base.yml", ".github/workflows/publish.yml"]
+    paths: ["bron/**", "scripts/**", "overrides/**", "docs/js/**", "docs/css/**", "mkdocs.base.yml", "respec/**", "site_root/**", ".github/workflows/publish.yml"]
   workflow_dispatch:
 
 permissions:
@@ -20,16 +20,20 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       klaar: ${{ steps.bron.outputs.klaar }}
+      mkdocs: ${{ steps.bron.outputs.mkdocs }}
+      respec: ${{ steps.bron.outputs.respec }}
     steps:
       - uses: actions/checkout@v4
       - id: bron
-        name: Controleer of er een publieksversie in bron/ staat
+        name: Controleer welke publieksbestanden in bron/ staan
         run: |
-          if ls bron/*publiek*.docx >/dev/null 2>&1 && ls bron/*publiek*.xlsx >/dev/null 2>&1; then
-            echo "klaar=true" >> "$GITHUB_OUTPUT"
-          else
+          mk=false; rs=false
+          if ls bron/*publiek*.docx >/dev/null 2>&1 && ls bron/*publiek*.xlsx >/dev/null 2>&1; then mk=true; fi
+          if ls bron/*publiek*.md >/dev/null 2>&1; then rs=true; fi
+          echo "mkdocs=$mk" >> "$GITHUB_OUTPUT"; echo "respec=$rs" >> "$GITHUB_OUTPUT"
+          if [ "$mk" = true ] || [ "$rs" = true ]; then echo "klaar=true" >> "$GITHUB_OUTPUT"; else
             echo "klaar=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::Nog geen publieksversie (docx en xlsx met 'publiek' in de naam) in bron/; site niet gebouwd."
+            echo "::notice::Nog geen publieksversie (bestanden met 'publiek' in de naam) in bron/; site niet gebouwd."
           fi
   build:
     needs: check
@@ -45,11 +49,18 @@ jobs:
           sudo dpkg -i pandoc-3.1.11-1-amd64.deb
           pandoc --version | head -1
       - run: pip install -r requirements.txt
-      - name: Zet publieksversie om
-        run: python scripts/build_site.py
-      - run: mkdocs build
+      - name: Startpagina
+        run: mkdir -p _site && cp site_root/index.html _site/ && touch _site/.nojekyll
+      - name: MkDocs-weergave (docx + xlsx)
+        if: needs.check.outputs.mkdocs == 'true'
+        run: |
+          python scripts/build_site.py
+          mkdocs build -d _site/mkdocs
+      - name: ReSpec-weergave (md)
+        if: needs.check.outputs.respec == 'true'
+        run: python scripts/build_respec.py _site/respec
       - uses: actions/upload-pages-artifact@v3
-        with: {path: site}
+        with: {path: _site}
   deploy:
     needs: build
     runs-on: ubuntu-latest
