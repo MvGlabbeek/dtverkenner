@@ -4,6 +4,9 @@ Gebruik: python scripts/build_respec.py <uitvoermap>   (standaard _site/respec)
 - Tekst vóór het eerste hoofdstuk wordt 'Status van dit document', het hoofdstuk Samenvatting de samenvatting.
 - Elk hoofdstuk (##) wordt een eigen sectie; 'Bijlage X: ...' wordt een ReSpec-bijlage (eigen nummering).
 - Handmatige nummers in koppen van bijlagen (A.1, A.1.2) worden weggehaald; ReSpec nummert zelf.
+- Figuren staan los in bron/figuren/ en worden in het md aangeroepen als figuren/<naam>.png.
+  De map wordt ongewijzigd meegekopieerd. Staat er geen .png maar wel een .svg, .jpg of .webp
+  met dezelfde naam, dan wordt die gebruikt. Ontbrekende figuren geven een waarschuwing.
 """
 import re, shutil, sys, datetime, html
 from pathlib import Path
@@ -15,6 +18,23 @@ BRON = ROOT / "bron"
 def versie(p):
     m = re.search(r"_v(\d+)", p.name)
     return (int(m.group(1)) if m else 0, p.stat().st_mtime)
+
+
+FIGUURTYPES = (".png", ".svg", ".jpg", ".jpeg", ".webp")
+
+
+def figuren(tekst, uit):
+    bron = BRON / "figuren"
+    if bron.is_dir():
+        shutil.copytree(bron, uit / "figuren")
+    def kies(m):
+        stam = Path(m.group(2)).with_suffix("")
+        for ext in FIGUURTYPES:
+            if (uit / "figuren" / (stam.name + ext)).exists():
+                return f"{m.group(1)}figuren/{stam.name}{ext}"
+        print(f"::warning::Figuur ontbreekt in bron/figuren/: {stam.name} (png, svg, jpg of webp)")
+        return m.group(0)
+    return re.sub(r'(src="|\]\()figuren/([^")\s]+)', kies, tekst)
 
 
 def main():
@@ -36,6 +56,7 @@ def main():
             extra += f',\n        {{ value: "{label}", href: "downloads/{f.name}" }}'
 
     tekst = md.read_text(encoding="utf-8")
+    tekst = figuren(tekst, uit)
     delen = re.split(r"^## (.+)$", tekst, flags=re.M)
     (uit / "parts" / "sotd.md").write_text(delen[0].strip() + "\n", encoding="utf-8")
     secties, n = [], 0
