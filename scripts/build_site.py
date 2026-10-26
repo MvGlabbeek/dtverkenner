@@ -83,7 +83,7 @@ def register(xlsx: Path) -> None:
     ws = wb["Portfolio"]
     rows = list(ws.iter_rows(values_only=True))
     kop = [str(c) for c in rows[0] if c is not None]
-    toon = [k for k in ("ID", "Initiatief", "Focus", "Gebied", "Land", "Rol in ecosysteem",
+    toon = [k for k in ("ID", "Categorie", "Initiatief", "Focus", "Gebied", "Land", "Rol in ecosysteem",
                         "Primaire functie", "Schaalniveau", "Twinniveau", "Volwassenheid",
                         "Kadercodes", "Bron") if k in kop]
     idx = [kop.index(k) for k in toon]

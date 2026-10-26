@@ -10,29 +10,33 @@ Startpagina: **https://mvglabbeek.github.io/dtverkenner/**, met twee weergaven v
 ## Nieuwe versie publiceren
 
 1. Controleer de publieksversie. Alle bestandsnamen moeten `publiek` en het versienummer bevatten:
-   - `Inventarisatie_digital_twins_NL_EU_2026-10_v13_publiek.docx` en `Register_..._v13_publiek.xlsx` voor de MkDocs-weergave;
-   - `Inventarisatie_digital_twins_NL_EU_2026-10_v13_publiek.md` (rapport in Markdown) voor de ReSpec-weergave, met de figuren los in [`bron/figuren/`](bron/figuren/) (zie hieronder).
+   - `Inventarisatie_digital_twins_NL_EU_2026-10_v14_publiek.docx` en `Register_..._v14_publiek.xlsx` voor de MkDocs-weergave;
+   - `Inventarisatie_digital_twins_NL_EU_2026-10_v14_publiek.md` (rapport in Markdown) voor de ReSpec-weergave, met de figuren los in [`bron/figuren/`](bron/figuren/) (zie hieronder).
    Ontbreekt een van beide sets, dan wordt alleen de andere weergave gebouwd.
 2. Upload de bestanden in de map [`bron/`](bron/) (op github.com: *Add file → Upload files*). Oude versies mogen blijven staan.
 3. Commit naar `main`. De workflow *Publiceer site* bouwt en publiceert de site binnen een paar minuten (zie tabblad *Actions*).
-4. Optioneel: maak een tag of release (bijv. `v13`) om de versie vast te leggen.
+4. Optioneel: maak een tag of release (bijv. `v14`) om de versie vast te leggen.
 
-De site gebruikt altijd het bestand met het hoogste versienummer (`_v13`) in de naam. Bestanden zonder `publiek` in de naam worden genegeerd.
+De site gebruikt altijd het bestand met het hoogste versienummer (`_v14`) in de naam. Bestanden zonder `publiek` in de naam worden genegeerd.
 
 ## Figuren (ReSpec-weergave)
 
-Het Markdown-rapport bevat geen ingebedde afbeeldingen, maar verwijst naar vaste bestandsnamen in `bron/figuren/`:
+Het Markdown-rapport bevat geen ingebedde afbeeldingen, maar verwijst naar figuren met een vast nummer in `bron/figuren/`: `0001.png` tot en met `9999.png`. Het nummer zegt niets over de plaats in het rapport; een nieuwe figuur krijgt het eerstvolgende vrije nummer en een nummer wordt niet hergebruikt.
 
-| Figuur | Bestand |
+| Bestand | Figuur in het rapport (versie 13) |
 |---|---|
-| Figuur 1: Datamodel van het register | `datamodel-register.png` |
-| Figuur 2: Initiatieven naar rol en focus | `initiatieven-rol-focus.png` |
-| Figuur 3: Primaire functie x schaalniveau (Energie) | `functie-schaal-energie.png` |
-| Figuur 4: Functies over alle initiatieven | `functies-totaal.png` |
-| Figuur A.1: Lagenmodel referentiearchitectuur | `ra-lagenmodel.png` |
-| Figuur A.2: Drie scopes | `ra-scopes.png` |
+| `0001.png` | Figuur 1: Datamodel van het register |
+| `0002.png` | Figuur 2: Initiatieven naar rol en focus |
+| `0003.png` | Figuur 3: Primaire functie x schaalniveau (Energie) |
+| `0004.png` | Figuur 4: Functies over alle initiatieven |
+| `0005.png` | Figuur A.1: Lagenmodel referentiearchitectuur |
+| `0006.png` | Figuur A.2: Drie scopes |
 
-Een figuur vervangen: upload een nieuw bestand met precies dezelfde naam in `bron/figuren/` en commit. De naam blijft gelijk, ook als het versienummer van het rapport verandert. PNG is de standaard; een `.svg`, `.jpg` of `.webp` met dezelfde naam (zonder `.png`-variant) wordt automatisch gebruikt. Breedte en hoogte volgen uit het bestand zelf (maximaal de tekstbreedte), dus een andere verhouding is geen probleem. Een ontbrekende figuur geeft een waarschuwing in de workflow. Een nieuwe figuur: voeg in het md `<img src="figuren/<naam>.png" alt="..." style="max-width:100%" />` toe en upload het bestand.
+Een figuur vervangen: upload een nieuw bestand met precies dezelfde naam in `bron/figuren/` en commit. PNG is de standaard; een `.svg`, `.jpg` of `.webp` met hetzelfde nummer (zonder `.png`-variant) wordt automatisch gebruikt. Breedte en hoogte volgen uit het bestand zelf (maximaal de tekstbreedte), dus een andere verhouding is geen probleem. Een ontbrekende figuur geeft een waarschuwing in de workflow. Een nieuwe figuur: kies het eerstvolgende vrije nummer, zet in het md `<img src="figuren/0007.png" alt="..." style="max-width:100%" />` en upload het bestand.
+
+## Nummering van initiatieven
+
+Initiatieven hebben een vast volgnummer DT-001, DT-002, ... (kolom ID in het register). Het soort initiatief staat apart in de kolommen Categoriecode (K, R, T, B, C, E, L, I) en Categorie; de legenda staat in het rapport (paragraaf Opbouw van het register) en op het tabblad Toelichting van het register.
 
 ## Wat de workflow doet
 
